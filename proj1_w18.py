@@ -63,9 +63,11 @@ class Movie(Media):
     def __len__(self):
         return self.movie_length
 
-def getiTunesData(search_term):
+def getiTunesData(search_term, max_results=10):
     baseurl = "https://itunes.apple.com/search"
-    dict_params = {'term' : search_term}
+    dict_params = {}
+    dict_params['term'] = search_term
+    dict_params['limit'] = max_results
     return requests.get(baseurl, dict_params).json()["results"]
 
 if __name__ == "__main__":

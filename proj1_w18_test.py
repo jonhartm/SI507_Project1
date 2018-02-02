@@ -66,12 +66,13 @@ class TestJSONConstructors(unittest.TestCase):
             jsonfile = json.load(file)
 
         for entry in jsonfile:
-            if not "kind" in entry: # kind only appears on songs or movies?
+            if 'kind' in entry:
+                if entry["kind"] == "song":
+                    self.song_test = proj1.Song(json=entry)
+                elif entry["kind"] == "feature-movie":
+                    self.movie_test = proj1.Movie(json=entry)
+            else:
                 self.media_test = proj1.Media(json=entry)
-            elif entry["kind"] == "song":
-                self.song_test = proj1.Song(json=entry)
-            elif entry["kind"] == "feature-movie":
-                self.movie_test = proj1.Movie(json=entry)
 
     def test_Constructors(self):
         self.assertEqual(self.media_test.title, "Bridget Jones's Diary (Unabridged)")

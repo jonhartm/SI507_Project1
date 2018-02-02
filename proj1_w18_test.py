@@ -102,6 +102,20 @@ class TestJSONConstructors(unittest.TestCase):
 class TestiTunesAPI(unittest.TestCase):
     def test_commonWords(self):
         for result in proj1.getiTunesData("baby"):
-            print(proj1.Media(json=result))
+            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
+
+        for result in proj1.getiTunesData("love"):
+            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
+
+    def test_uncommonWords(self):
+        for result in proj1.getiTunesData("moana"):
+            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
+
+        for result in proj1.getiTunesData("helter skelter"):
+            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
+
+    def test_nonsenseQueries(self):
+        for result in proj1.getiTunesData("&@#!$"):
+            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
 
 unittest.main()

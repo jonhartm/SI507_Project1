@@ -102,21 +102,41 @@ class TestJSONConstructors(unittest.TestCase):
 
 class TestiTunesAPI(unittest.TestCase):
     def test_commonWords(self):
-        for result in proj1.getiTunesData("baby"):
-            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
-
-        for result in proj1.getiTunesData("love"):
-            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
+        self.runQuery("baby")
+        self.runQuery("love")
 
     def test_uncommonWords(self):
-        for result in proj1.getiTunesData("moana"):
-            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
-
-        for result in proj1.getiTunesData("helter skelter"):
-            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
+        self.runQuery("moana")
+        self.runQuery("helter skelter")
 
     def test_nonsenseQueries(self):
-        for result in proj1.getiTunesData("&@#!$"):
-            self.assertIsInstance(proj1.Media(json=result), proj1.Media)
+        self.runQuery("&@#!$")
+
+    def runQuery(self, query):
+        test_object = None
+        for result in proj1.getiTunesData(query):
+            if 'kind' in result:
+                if result["kind"] == "song":
+                    test_object = proj1.Song(json=result)
+                elif result["kind"] == "feature-movie":
+                    test_object = proj1.Movie(json=result)
+            else:
+                test_object = proj1.Media(json=result)
+
+        # generic tests
+        self.assertIsNotNone(test_object.title)
+        self.assertIsNotNone(test_object.author)
+        self.assertIsNotNone(test_object.release)
+
+        # tests specific to song objects
+        if type(test_object) is proj1.Song:
+            self.assertIsNotNone(test_object.album)
+            self.assertIsNotNone(test_object.genre)
+            self.assertIsNotNone(test_object.track_length)
+
+        # tests specific to movie objects
+        if type(test_object) is proj1.Movie:
+            self.assertIsNotNone(test_object.rating)
+            self.assertIsNotNone(test_object.movie_length)
 
 unittest.main()

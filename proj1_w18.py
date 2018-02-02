@@ -2,6 +2,7 @@ import requests
 import json
 
 class Media:
+    media_types_trackname = ['song', 'feature-movie', 'music-video']
 
     def __init__(self, title="No Title", author="No Author", release="No Year", json=None):
         if json is None:
@@ -9,7 +10,12 @@ class Media:
             self.author = author
             self.release = release
         else:
-            self.title = json["collectionName"]
+            if 'kind' in json and json['kind'] in self.media_types_trackname:
+                self.title = json['trackName']
+            elif json['wrapperType'] == 'audiobook':
+                self.title = json['collectionName']
+            else:
+                raise Exception("new media type") # TODO: this can't stay here
             self.author = json["artistName"]
             self.release = int(json["releaseDate"][:4])
 
@@ -30,7 +36,6 @@ class Song(Media):
             self.track_length = track_length
         else:
             super().__init__(json=json)
-            self.title = json["trackName"]
             self.album = json["collectionName"]
             self.genre = json["primaryGenreName"]
             self.track_length = round(int(json["trackTimeMillis"]) / 1000)
@@ -49,7 +54,6 @@ class Movie(Media):
             self.movie_length = movie_length
         else:
             super().__init__(json=json)
-            self.title = json["trackName"]
             self.rating = json["contentAdvisoryRating"]
             self.movie_length = round(int(json["trackTimeMillis"])/1000/60)
 

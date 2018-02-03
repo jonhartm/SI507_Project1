@@ -70,6 +70,23 @@ def getiTunesData(search_term, max_results=10):
     dict_params['limit'] = max_results
     return requests.get(baseurl, dict_params).json()["results"]
 
+def sortMediaResults(results):
+    media_dict = {
+        'Media' : [],
+        'Songs' : [],
+        'Movies' : []
+    }
+    for result in results:
+        if 'kind' in result:
+            if result["kind"] == "song":
+                media_dict['Songs'].append(Song(json=result))
+            elif result["kind"] == "feature-movie":
+                media_dict['Movies'].append(Movie(json=result))
+        else:
+            media_dict['Media'].append(Media(json=result))
+    return media_dict['Songs']+media_dict['Movies']+media_dict['Media']
+
+
 if __name__ == "__main__":
     	# your control code for Part 4 (interactive search) should go here
         pass

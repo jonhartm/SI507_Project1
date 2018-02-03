@@ -59,22 +59,32 @@ class TestSong(unittest.TestCase):
 
 class TestMovie(unittest.TestCase):
     def setUp(self):
-        self.test_movie = proj1.Movie(title="Jaws", author="Steven Speilberg", release="1975", rating="PG", movie_length=124)
+        self.test_movie1 = proj1.Movie()
+        self.test_movie2 = proj1.Movie(title="Jaws", author="Steven Speilberg", release="1975", rating="PG", movie_length=124)
 
     def testConstructor(self):
-        self.assertEqual(self.test_movie.rating, "PG")
-        self.assertEqual(self.test_movie.movie_length, 124)
+        self.assertEqual(self.test_movie1.title, "No Title")
+        self.assertEqual(self.test_movie1.author, "No Author")
+        self.assertEqual(self.test_movie1.release, "No Year")
+        self.assertEqual(self.test_movie1.rating, "No Rating")
+        self.assertEqual(self.test_movie1.movie_length, 0)
+
+        self.assertEqual(self.test_movie2.title, "Jaws")
+        self.assertEqual(self.test_movie2.author, "Steven Speilberg")
+        self.assertEqual(self.test_movie2.release, "1975")
+        self.assertEqual(self.test_movie2.rating, "PG")
+        self.assertEqual(self.test_movie2.movie_length, 124)
 
         #movie should not have any attributes from the song class
-        with self.assertRaises(AttributeError): self.test_movie.album
-        with self.assertRaises(AttributeError): self.test_movie.genre
-        with self.assertRaises(AttributeError): self.test_movie.track_length
+        with self.assertRaises(AttributeError): self.test_movie2.album
+        with self.assertRaises(AttributeError): self.test_movie2.genre
+        with self.assertRaises(AttributeError): self.test_movie2.track_length
 
     def test_string(self):
-        self.assertEqual(str(self.test_movie), "Jaws by Steven Speilberg (1975) [PG]")
+        self.assertEqual(str(self.test_movie2), "Jaws by Steven Speilberg (1975) [PG]")
 
     def test_len(self):
-        self.assertEqual(self.test_movie.movie_length, 124)
+        self.assertEqual(self.test_movie2.movie_length, 124)
 
 class TestJSONConstructors(unittest.TestCase):
     def setUp(self):

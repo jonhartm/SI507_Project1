@@ -110,7 +110,7 @@ if __name__ == "__main__":
     while s != "exit":
         results = sortMediaResults(getiTunesData(s, 50))
         # print out the list of results, formatted, and with a counter so the user can select them
-        counter = 0
+        counter = 1
         current_type = None
         for result in results:
             # print the header for each section
@@ -122,11 +122,11 @@ if __name__ == "__main__":
         newsearch = False
         while not newsearch:
             s = input("Enter a number for more info, or another search term, or exit: ")
-            if isInt(s) and (int(s) >= 0 and int(s) < len(results)):
+            if isInt(s) and (int(s) >= 1 and int(s) < len(results)+1):
                 # make sure this media has a url we can use
                 if results[int(s)].url != None:
                     webbrowser.open(results[int(s)].url)
-            elif isInt(s) and (int(s) < 0 or int(s) >= len(results)):
+            elif isInt(s) and (int(s) < 1 or int(s) >= len(results)+1):
                 print("{} is an invalid selection. Choose between 0 and {})".format(s, len(results)))
             else:
                 newsearch = True

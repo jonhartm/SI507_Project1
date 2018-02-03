@@ -131,7 +131,7 @@ if __name__ == "__main__":
             s = input("Enter a search term or \"exit\" to quit: ")
             newsearch = True
         while not newsearch:
-            s = input("Enter a number for more info, or another search term, or exit: ")
+            s = input("Enter a number for more info, or another search term, or \"exit\": ")
             if isInt(s) and (int(s) >= 1 and int(s) < len(results)+1):
                 # make sure this media has a url we can use
                 if results[int(s)-1].url != None:

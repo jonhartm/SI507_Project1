@@ -93,5 +93,17 @@ def sortMediaResults(results):
 
 
 if __name__ == "__main__":
-    	# your control code for Part 4 (interactive search) should go here
-        pass
+    s = ""
+    while s != "exit":
+        s = input("Enter a search term or \"exit\" to quit: ")
+        results = sortMediaResults(getiTunesData(s, 50))
+        # print out the list of results, formatted, and with a counter so the user can select them
+        counter = 0
+        current_type = None
+        for result in results:
+            # print the header for each section
+            if type(result) != current_type:
+                current_type = type(result)
+                print("-----{}-----".format(result.name))
+            print(str(counter).ljust(2) + " - " + str(result))
+            counter += 1

@@ -2,7 +2,7 @@ import requests
 import json
 
 class Media:
-    media_types_trackname = ['song', 'feature-movie', 'music-video']
+    media_types_trackname = ['song', 'feature-movie', 'music-video', 'podcast', 'tv-episode']
 
     def __init__(self, title="No Title", author="No Author", release="No Year", json=None):
         if json is None:

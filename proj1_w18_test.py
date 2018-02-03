@@ -16,6 +16,13 @@ class TestMedia(unittest.TestCase):
         self.assertEqual(m2.author, "Prince")
         self.assertEqual(self.test_media.release, 2012)
 
+        # media should not have any instance variables from sub classes
+        with self.assertRaises(AttributeError): m1.album
+        with self.assertRaises(AttributeError): m1.genre
+        with self.assertRaises(AttributeError): m1.track_length
+        with self.assertRaises(AttributeError): m1.rating
+        with self.assertRaises(AttributeError): m1.movie_length
+
     def test_string(self):
         self.assertEqual(str(self.test_media), "Bridget Jones's Diary (Unabridged) by Helen Fielding (2012)")
 
@@ -40,6 +47,10 @@ class TestSong(unittest.TestCase):
         self.assertEqual(s2.release, 1981)
         self.assertEqual(s2.genre, "Dance")
 
+        # song should not have any attributes from the movie class
+        with self.assertRaises(AttributeError): s1.rating
+        with self.assertRaises(AttributeError): s1.movie_length
+
     def test_string(self):
         self.assertEqual(str(self.test_song), "Hey Jude by The Beatles (1968) [Rock]")
 
@@ -53,6 +64,11 @@ class TestMovie(unittest.TestCase):
     def testConstructor(self):
         self.assertEqual(self.test_movie.rating, "PG")
         self.assertEqual(self.test_movie.movie_length, 124)
+
+        #movie should not have any attributes from the song class
+        with self.assertRaises(AttributeError): self.test_movie.album
+        with self.assertRaises(AttributeError): self.test_movie.genre
+        with self.assertRaises(AttributeError): self.test_movie.track_length
 
     def test_string(self):
         self.assertEqual(str(self.test_movie), "Jaws by Steven Speilberg (1975) [PG]")

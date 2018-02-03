@@ -116,21 +116,30 @@ if __name__ == "__main__":
         # print out the list of results, formatted, and with a counter so the user can select them
         counter = 1
         current_type = None
-        for result in results:
-            # print the header for each section
-            if type(result) != current_type:
-                current_type = type(result)
-                print("-----{}-----".format(result.name))
-            print(str(counter).ljust(2) + " - " + str(result))
-            counter += 1
-        newsearch = False
+        newsearch = True
+        if len(results) > 0:
+            for result in results:
+                # print the header for each section
+                if type(result) != current_type:
+                    current_type = type(result)
+                    print("-----{}-----".format(result.name))
+                print(str(counter).ljust(2) + " - " + str(result))
+                counter += 1
+                newsearch = False
+        else:
+            print("No results found for " + s)
+            s = input("Enter a search term or \"exit\" to quit: ")
+            newsearch = True
         while not newsearch:
             s = input("Enter a number for more info, or another search term, or exit: ")
             if isInt(s) and (int(s) >= 1 and int(s) < len(results)+1):
                 # make sure this media has a url we can use
-                if results[int(s)].url != None:
-                    webbrowser.open(results[int(s)].url)
+                if results[int(s)-1].url != None:
+                    print("Opening URL: " + results[int(s)-1].url)
+                    webbrowser.open(results[int(s)-1].url)
+                else:
+                    print("This item does not have an associated URL")
             elif isInt(s) and (int(s) < 1 or int(s) >= len(results)+1):
-                print("{} is an invalid selection. Choose between 0 and {})".format(s, len(results)))
+                print("{} is an invalid selection. Choose between 1 and {})".format(s, len(results)))
             else:
                 newsearch = True

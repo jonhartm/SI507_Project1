@@ -152,21 +152,21 @@ class TestiTunesAPI(unittest.TestCase):
             else:
                 test_object = proj1.Media(json=result)
 
-        # generic tests
-        self.assertIsNotNone(test_object.title)
-        self.assertIsNotNone(test_object.author)
-        self.assertIsNotNone(test_object.release)
-        self.assertIsNotNone(test_object.url, "Missing collection URL")
+            # generic tests
+            self.assertIsNotNone(test_object.title)
+            self.assertIsNotNone(test_object.author)
+            self.assertIsNotNone(test_object.release)
+            self.assertIsNotNone(test_object.url, "Missing collection URL")
 
-        # tests specific to song objects
-        if type(test_object) is proj1.Song:
-            self.assertIsNotNone(test_object.album)
-            self.assertIsNotNone(test_object.genre)
-            self.assertIsNotNone(test_object.track_length)
+            # tests specific to song objects
+            if type(test_object) is proj1.Song:
+                self.assertIsNotNone(test_object.album)
+                self.assertIsNotNone(test_object.genre)
+                self.assertIsNotNone(test_object.track_length)
 
-        # tests specific to movie objects
-        if type(test_object) is proj1.Movie:
-            self.assertIsNotNone(test_object.rating)
-            self.assertIsNotNone(test_object.movie_length)
+            # tests specific to movie objects
+            if type(test_object) is proj1.Movie:
+                self.assertIsNotNone(test_object.rating)
+                self.assertIsNotNone(test_object.movie_length)
 
 unittest.main()

@@ -138,6 +138,9 @@ class TestiTunesAPI(unittest.TestCase):
     def test_nonsenseQueries(self):
         self.runQuery("&@#!$")
 
+    def test_blankQuery(self):
+        self.runQuery("")
+
     def runQuery(self, query):
         test_object = None
         for result in proj1.getiTunesData(query):

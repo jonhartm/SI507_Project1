@@ -22,6 +22,10 @@ class Media:
             self.release = int(json["releaseDate"][:4])
             if 'trackViewUrl' in json:
                 self.url = json["trackViewUrl"]
+            elif 'collectionViewUrl' in json:
+                self.url = json["collectionViewUrl"]
+            else:
+                self.url = None
 
     def __str__(self):
         return "{} by {} ({})".format(self.title, self.author, self.release)

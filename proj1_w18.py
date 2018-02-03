@@ -1,5 +1,6 @@
 import requests
 import json
+import webbrowser
 
 class Media:
     media_types_trackname = ['song', 'feature-movie', 'music-video', 'podcast', 'tv-episode']
@@ -19,6 +20,8 @@ class Media:
                 raise Exception("new media type") # TODO: this can't stay here
             self.author = json["artistName"]
             self.release = int(json["releaseDate"][:4])
+            if 'trackViewUrl' in json:
+                self.url = json["trackViewUrl"]
 
     def __str__(self):
         return "{} by {} ({})".format(self.title, self.author, self.release)
@@ -103,9 +106,8 @@ def isInt(s):
         return False
 
 if __name__ == "__main__":
-    s = ""
+    s = input("Enter a search term or \"exit\" to quit: ")
     while s != "exit":
-        s = input("Enter a search term or \"exit\" to quit: ")
         results = sortMediaResults(getiTunesData(s, 50))
         # print out the list of results, formatted, and with a counter so the user can select them
         counter = 0
@@ -117,3 +119,14 @@ if __name__ == "__main__":
                 print("-----{}-----".format(result.name))
             print(str(counter).ljust(2) + " - " + str(result))
             counter += 1
+        newsearch = False
+        while not newsearch:
+            s = input("Enter a number for more info, or another search term, or exit: ")
+            if isInt(s) and (int(s) >= 0 and int(s) < len(results)):
+                # make sure this media has a url we can use
+                if results[int(s)].url != None:
+                    webbrowser.open(results[int(s)].url)
+            elif isInt(s) and (int(s) < 0 or int(s) >= len(results)):
+                print("{} is an invalid selection. Choose between 0 and {})".format(s, len(results)))
+            else:
+                newsearch = True

@@ -127,6 +127,7 @@ class TestiTunesAPI(unittest.TestCase):
         self.assertIsNotNone(test_object.title)
         self.assertIsNotNone(test_object.author)
         self.assertIsNotNone(test_object.release)
+        self.assertIsNotNone(test_object.url, "Missing collection URL")
 
         # tests specific to song objects
         if type(test_object) is proj1.Song:

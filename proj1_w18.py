@@ -91,6 +91,16 @@ def sortMediaResults(results):
             media_dict['Media'].append(Media(json=result))
     return media_dict['Songs']+media_dict['Movies']+media_dict['Media']
 
+# Determine if a string can be converted to an integer
+# params: a string to test
+# returns: True if the string can be converted to an integer
+# from https://stackoverflow.com/questions/1265665/how-can-i-check-if-a-string-represents-an-int-without-using-try-except
+def isInt(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 if __name__ == "__main__":
     s = ""

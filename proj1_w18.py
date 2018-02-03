@@ -3,6 +3,7 @@ import json
 
 class Media:
     media_types_trackname = ['song', 'feature-movie', 'music-video', 'podcast', 'tv-episode']
+    name = "Media"
 
     def __init__(self, title="No Title", author="No Author", release="No Year", json=None):
         if json is None:
@@ -28,6 +29,8 @@ class Media:
 ## Other classes, functions, etc. should go here
 
 class Song(Media):
+    name = "Song"
+
     def __init__(self, title="No Title", author="No Author", release="No Year", album="No Album", genre="No Genre", track_length=0, json=None):
         if json is None:
             super().__init__(title, author, release, json=json)
@@ -47,6 +50,8 @@ class Song(Media):
         return self.track_length
 
 class Movie(Media):
+    name = "Movie"
+
     def __init__(self, title="No Title", author="No Author", release="No Year", rating="No Rating", movie_length=0, json=None):
         if json is None:
             super().__init__(title, author, release)
